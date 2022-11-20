@@ -1,0 +1,15 @@
+{% extends 'admin/change_form.html' %}
+{% block content %}
+{{ block.super }}
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+       
+        slug_placeholder = document.getElementById("id_Slug");
+        title_placeholder = document.getElementById("id_Title");
+        title_placeholder.addEventListener("change", function(e){
+            slug_placeholder.setAttribute('value', e.target.value.toLowerCase().trim().replace(/\s/g, "_"));
+        })
+
+    });
+</script>
+{% endblock %}
