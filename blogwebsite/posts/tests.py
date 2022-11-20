@@ -1,9 +1,15 @@
-from django.test import TestCase
+from django.test import RequestFactory,TestCase
 from .models import Post, Category, Tag
+from django.contrib.auth.models import AnonymousUser, User
 
 # Create your tests here.
 class CategoryTestCase(TestCase):
     def setUp(self):
+        # Create a Test User
+        self.factory = RequestFactory()
+        self.user = User.objects.create_user(
+            username='jacob', email='jacob@kamyar_mk.com', password='top_secret'
+        )
         # Making the Categories
         Category.objects.create(Name="test1",Slug="test1",Parent="0")
         Category.objects.create(Name="test2",Slug="test2",Parent='1')
@@ -18,12 +24,12 @@ class CategoryTestCase(TestCase):
         Tag.objects.create(Name="Tag4", Slug="tag4")
         Tag.objects.create(Name="Tag5", Slug="tag5")
         # Making Posts
-        Post.objects.create(Title="Test Post 1",Slug="test_post_1",Category=1,Tags=[1,2],Status="P",Text="something something",Author=1)
-        Post.objects.create(Title="Test Post 2",Slug="test_post_2",Category=3,Tags=[4,2],Status="P",Text="something something",Author=1)
-        Post.objects.create(Title="Test Post 3",Slug="test_post_3",Category=4,Tags=[3,2],Status="P",Text="something something",Author=1)
-        Post.objects.create(Title="Test Post 4",Slug="test_post_4",Category=5,Tags=[1,5],Status="P",Text="something something",Author=1)
-        Post.objects.create(Title="Test Post 5",Slug="test_post_5",Category=2,Tags=[3,4],Status="P",Text="something something",Author=1)
-        Post.objects.create(Title="Test Post 6",Slug="test_post_6",Category=1,Tags=[5,2],Status="P",Text="something something",Author=1)
+            # Post.objects.create(Title="Test Post 1",Slug="test_post_1",Category=Category.objects.get(id=1),Tags=[1,2],Status="P",Text="something something",Author=self.user)
+            # Post.objects.create(Title="Test Post 2",Slug="test_post_2",Category=Category.objects.get(id=3),Tags=[4,2],Status="P",Text="something something",Author=self.user)
+            # Post.objects.create(Title="Test Post 3",Slug="test_post_3",Category=Category.objects.get(id=4),Tags=[3,2],Status="P",Text="something something",Author=self.user)
+            # Post.objects.create(Title="Test Post 4",Slug="test_post_4",Category=Category.objects.get(id=5),Tags=[1,5],Status="P",Text="something something",Author=self.user)
+            # Post.objects.create(Title="Test Post 5",Slug="test_post_5",Category=Category.objects.get(id=2),Tags=[3,4],Status="P",Text="something something",Author=self.user)
+            # Post.objects.create(Title="Test Post 6",Slug="test_post_6",Category=Category.objects.get(id=1),Tags=[5,2],Status="P",Text="something something",Author=self.user)
 
     def test_category_order(self):
         """Test if the Categories are ordered Correctly"""
@@ -40,6 +46,6 @@ class CategoryTestCase(TestCase):
         self.assertEqual(Tag.objects.get(id=1).Name, 'Tag1')
         self.assertEqual(Tag.objects.get(id=1).Slug, 'tag1')
 
-    def test_post_retrive(self):
-        """Test if the Tags are saved Correctly"""
-        self.assertEqual(Tag.objects.get(id=1).Slug, 'tag1')
+    # def test_post_retrive(self):
+    #     """Test if the Tags are saved Correctly"""
+    #     self.assertEqual(Tag.objects.get(id=1).Slug, 'tag1')

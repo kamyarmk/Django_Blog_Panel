@@ -9,8 +9,8 @@ def MakePublished(modeladmin, request, queryset):
     
 
 class PageAdmin(admin.ModelAdmin):
-    fields=(('Title', 'Status'), ('Date', 'OwnerId'), 'Content')
-    list_display = ['Title', 'Status']
+    fields=(('Title', 'Slug'), ('Status', 'Parent') ,('Date', 'OwnerId'), 'Content')
+    list_display = ['Title', 'Status', 'Parent']
     ordering = ['Title']
     actions = [MakePublished]
 
